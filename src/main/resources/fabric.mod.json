@@ -10,6 +10,9 @@
 	"contact": {
 		"sources": "https://github.com/LoganDark/ld-config"
 	},
+	"custom": {
+		"modmenu:api": true
+	},
 	"icon": "assets/ld-config/icon.png",
 	"environment": "*",
 	"entrypoints": {},
