@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screen.Screen
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.SimpleRegistry
 import java.io.File
+import java.io.FileNotFoundException
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.collections.HashMap
@@ -258,7 +259,11 @@ open class Config(
 	}
 
 	fun load() {
-		val json = gson.fromJson(configFile.readText(), JsonObject::class)
+		val json = try {
+			gson.fromJson(configFile.readText(), JsonObject::class)
+		} catch (ex: FileNotFoundException) {
+			return
+		}
 
 		try {
 			runDataFixers(json)
