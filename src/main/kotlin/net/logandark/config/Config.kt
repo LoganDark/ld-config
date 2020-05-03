@@ -169,6 +169,7 @@ open class Config(
 			json.add(it.identifier.toString(), it.serialize())
 		}
 
+		configFile.createNewFile()
 		configFile.writeText(gson.toJson(json))
 	}
 
