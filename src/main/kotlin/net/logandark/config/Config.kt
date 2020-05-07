@@ -132,7 +132,7 @@ open class Config(
 	/**
 	 * Adds a [ConfigOption] to the registry.
 	 */
-	fun add(configOption: ConfigOption<*>) = configOption.also {
+	fun <T> add(configOption: ConfigOption<T>) = configOption.also {
 		registry.add(configOption.identifier, configOption)
 	}
 
