@@ -155,9 +155,9 @@ open class Config(
 		if (FabricLoader.getInstance().environmentType == EnvType.CLIENT)
 			File(MinecraftClient.getInstance().runDirectory, "config")
 		else
-			File(".${File.pathSeparatorChar}config")
+			File(".${File.separatorChar}config")
 
-	private val configFile = File(configDir, filename.replace('/', File.pathSeparatorChar))
+	private val configFile = File(configDir, filename.replace('/', File.separatorChar))
 	private val gson: BetterGson = BetterGson(GsonBuilder().setPrettyPrinting().create(), "\t")
 
 	fun save() {
