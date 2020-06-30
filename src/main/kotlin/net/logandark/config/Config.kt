@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
+import com.mojang.serialization.Lifecycle
 import me.shedaniel.clothconfig2.api.AbstractConfigListEntry
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import me.shedaniel.clothconfig2.api.ConfigCategory
@@ -12,7 +13,10 @@ import net.fabricmc.api.EnvType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.screen.Screen
+import net.minecraft.text.TranslatableText
 import net.minecraft.util.Identifier
+import net.minecraft.util.registry.Registry
+import net.minecraft.util.registry.RegistryKey
 import net.minecraft.util.registry.SimpleRegistry
 import java.io.File
 import java.io.FileNotFoundException
@@ -127,13 +131,14 @@ open class Config(
 		}
 	}
 
-	val registry = SimpleRegistry<ConfigOption<*>>()
+	val key: RegistryKey<Registry<ConfigOption<*>>> = RegistryKey.ofRegistry(Identifier("ld-config"))
+	val registry = SimpleRegistry(key, Lifecycle.stable())
 
 	/**
 	 * Adds a [ConfigOption] to the registry.
 	 */
 	fun <T> add(configOption: ConfigOption<T>) = configOption.also {
-		registry.add(configOption.identifier, configOption)
+		registry.add(RegistryKey.of(key, configOption.identifier), configOption)
 	}
 
 	fun createConfigScreen(parent: Screen): Screen {
@@ -142,7 +147,7 @@ open class Config(
 
 		registry.forEach {
 			val entry = it.buildEntry(entryBuilder)
-			builder.getOrCreateCategory(it.categoryTranslationKey).addEntry(entry)
+			builder.getOrCreateCategory(TranslatableText(it.categoryTranslationKey)).addEntry(entry)
 		}
 
 		return builder

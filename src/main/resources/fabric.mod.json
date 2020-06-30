@@ -17,12 +17,9 @@
 	"environment": "*",
 	"entrypoints": {},
 	"depends": {
-		"fabricloader": ">=0.7.1",
-		"fabric": "*",
+		"fabricloader": ">=0.8.8",
 		"fabric-language-kotlin": "*",
-		"minecraft": "1.15.x"
+		"minecraft": "1.16.x"
 	},
-	"suggests": {
-		"flamingo": "*"
-	}
+	"suggests": {}
 }
