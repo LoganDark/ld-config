@@ -23,6 +23,8 @@ import java.io.FileNotFoundException
 import java.util.*
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.collections.HashMap
+import kotlin.collections.forEach
+import kotlin.collections.set
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 open class Config(
@@ -138,7 +140,7 @@ open class Config(
 	 * Adds a [ConfigOption] to the registry.
 	 */
 	fun <T> add(configOption: ConfigOption<T>) = configOption.also {
-		registry.add(RegistryKey.of(key, configOption.identifier), configOption)
+		registry.add(RegistryKey.of(key, configOption.identifier), configOption, Lifecycle.stable())
 	}
 
 	fun createConfigScreen(parent: Screen): Screen {
